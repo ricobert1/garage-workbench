@@ -1,0 +1,13 @@
+# build outputs (CI rebuilds them)
+ar/stl/
+ar/_sel.scad
+ar/_workbench.usdc
+ar/workbench.glb
+ar/workbench.usdz
+ar/index.html
+ar/preview_glb.png
+ar/verify.txt
+site/
+.venv/
+__pycache__/
+.DS_Store

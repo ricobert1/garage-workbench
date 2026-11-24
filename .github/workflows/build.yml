@@ -1,0 +1,53 @@
+name: build-ar
+# Every push to main: scad -> STL -> GLB/USDZ -> verify -> viewer page -> GitHub Pages.
+# Phone: open the Pages URL, tap AR.
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install OpenSCAD (Ubuntu 24.04 ships 2021.01)
+        run: sudo apt-get update && sudo apt-get install -y openscad fonts-liberation
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - run: pip install -r requirements.txt
+      - name: Build + verify
+        working-directory: ar
+        run: |
+          bash export_parts.sh
+          python build_glb.py
+          python build_usdz.py
+          python verify.py | tee verify.txt
+          grep -qE '^([0-9]+)/\1 pass$' verify.txt   # fail unless every check passes
+          python build_html.py
+          python preview.py
+          mkdir -p ../site
+          cp index.html workbench.glb workbench.usdz verify.txt preview_glb.png ../site/
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-24.04
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

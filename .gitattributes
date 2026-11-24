@@ -1,0 +1,5 @@
+# keep LF so bash scripts run the same on Windows (Git Bash), Mac, and CI
+* text=auto eol=lf
+*.png binary
+*.glb binary
+*.usdz binary

@@ -25,5 +25,5 @@ python build_glb.py && python build_usdz.py && python verify.py && python build_
 Outputs: `ar/workbench.glb` (Android), `ar/workbench.usdz` (iPhone), `ar/index.html`.
 
 ## Coordinates
-scad: inches, x along bench wall (0 = left end of span, panel wall at x=144), y<0 into room, z up.
+scad: inches, x along bench wall (0 = left end of design at window-2 trim, panel wall at x=170), y<0 into room, z up.
 glTF/USD: meters, Y up, origin = floor at the back-wall/panel-wall corner.

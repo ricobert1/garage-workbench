@@ -20,7 +20,7 @@ sed -E \
   -e '/^color\("SaddleBrown", 0.55\)/d' \
   -e '/^color\("Peru", 0.35\)/d' \
   -e '/^color\("Gainsboro", 0.6\)/d' \
-  -e '/^color\("White"\) translate\(\[-30, -2, CEIL\]\)/d' \
+  -e '/^color\("White"\) translate\(\[-70, -2, CEIL\]\)/d' \
   -e '/fan window/,+1d' \
   -e 's/color\("([A-Za-z]+)"(, *[0-9.]+)?\)/csel("\1")/g' \
   "$SRC" > "$TMP"

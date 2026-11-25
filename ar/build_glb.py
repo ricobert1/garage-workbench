@@ -2,7 +2,7 @@
 
 OpenSCAD frame: inches, x along bench wall, y<0 into room, z up.
 glTF frame: meters, Y up, -Z forward.  Map (x, y, z)in -> (x, z, -y) * 0.0254.
-Origin shifted to floor at back-wall / panel-wall corner (x=144, y=0, z=0) so the
+Origin shifted to floor at back-wall / panel-wall corner (x=170, y=0, z=0) so the
 anchor is a real, findable point in the garage. The Lime L-marker sits exactly there.
 """
 from pathlib import Path
@@ -11,7 +11,7 @@ import trimesh
 
 HERE = Path(__file__).parent
 IN2M = 0.0254
-PANEL_X = 144.0
+PANEL_X = 170.0
 
 RGBA = {  # CSS named colors (+ scad alpha where used)
     "Black": (0, 0, 0, 255), "BurlyWood": (222, 184, 135, 255),

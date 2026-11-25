@@ -7,7 +7,8 @@
 // DECIDED:  v8: tall cab 24W x 24D x 94H moved to left end (x 0..24). 4" handle gap. Yukon x 28..74, keeps own top,
 //           front flush with bench, parks 11.75 off wall. L top = back strip behind Yukon + main top x 74.125..133.5.
 //           Top = doubled 23/32 ply + 1/4 hardboard = 1 11/16, surface 37 1/8. 18W drawer bank at right end of bay.
-//           Uppers 53W left of window 1, 17.5W upper right of window 1.
+//           Uppers 53W left of window 1. Right of window 1: open charging station, 3 Greenworks 40V chargers side by side.
+//           No ceiling hose reel (deferred until a bigger compressor).
 // ASSUMED:  Yukon look/handle position, Yukon wood top 1.75, 12" upper depth, cleat spacing, drawer bank 18W x 24D.
 
 CEIL = 100; WALL_X = 170; ZONE_X = WALL_X - 36;
@@ -25,7 +26,9 @@ DB_W = 18; DB_D = 24; DB_X0 = MAIN_X1 - DB_W;      // drawer bank
 W1_X0 = 78; W1_X1 = 116; W2_X0 = -38; W2_X1 = 0; SILL = 40.5; TRIM_TOP = 86.5;
 // uppers
 UP_X0 = TALL_W; UP_X1 = W1_X0 - 1; UP_Z0 = 55; UP_H = 30; UP_D = 12;
-UR_X0 = W1_X1 + 0.5; UR_X1 = MAIN_X1;                // narrow upper right of window 1
+CS_X0 = W1_X1 + 0.5; CS_X1 = MAIN_X1;                // charging station right of window 1
+CH_W = 4.56; CH_H = 6.63; CH_D = 2.83;              // charger (measured), battery 3.2W x 6.38L x 2.06 on its face
+BAT_W = 3.2; BAT_L = 6.38; BAT_T = 2.06; CH_Z = 58;
 UNDER = TOP_Z - TOP_T;
 
 billboard = [90, 0, 0];
@@ -128,17 +131,21 @@ for (i = [0:1]) {
 }
 translate([(UP_X0 + UP_X1)/2, -UP_D, UP_Z0 + UP_H/2]) lbl("uppers 53W x 12D x 30H", 1.8, -10);
 for (x = [UP_X0 + 1 : 12.5 : UP_X1 - 12]) color("DarkSlateGray") translate([x, -11, UP_Z0 + UP_H]) cube([12, 10, 10]);
-// narrow upper right of window 1 (single door)
-color("Tan") translate([UR_X0, -UP_D, UP_Z0]) cube([UR_X1 - UR_X0, UP_D, UP_H]);
-color("SlateGray") translate([UR_X0 + gap, -UP_D - 0.75, UP_Z0 + gap]) cube([UR_X1 - UR_X0 - 2*gap, 0.75, UP_H - 2*gap]);
-color("Wheat") translate([W1_X1, -0.75, TOP_Z]) cube([UR_X1 - W1_X1, 0.75, UP_Z0 - TOP_Z]);
+// charging station right of window 1: ply backer, strip, 3 chargers + batteries, shelf for the spare battery
+color("Wheat") translate([W1_X1, -0.75, TOP_Z]) cube([CS_X1 - W1_X1, 0.75, 85 - TOP_Z]);
+color("WhiteSmoke") translate([CS_X0 + 1, -2.25, 48]) cube([CS_X1 - CS_X0 - 2, 1.5, 2]);
+ch_gap = (CS_X1 - CS_X0 - 3 * CH_W) / 4;
+for (i = [0:2]) {
+  x = CS_X0 + ch_gap + i * (CH_W + ch_gap);
+  color("Black") translate([x, -0.75 - CH_D, CH_Z]) cube([CH_W, CH_D, CH_H]);
+  color("LimeGreen") translate([x + (CH_W - BAT_W)/2, -0.75 - CH_D - BAT_T, CH_Z + 0.25]) cube([BAT_W, BAT_T, BAT_L]);
+}
+color("BurlyWood") translate([CS_X0, -6, 74]) cube([CS_X1 - CS_X0, 5.25, 0.75]);
+color("LimeGreen") translate([CS_X0 + 2, -4.5, 74.75]) cube([BAT_W, BAT_T, BAT_L]);
+translate([(CS_X0 + CS_X1)/2, -6, 80]) lbl("40V chargers x3", 1.6, -4);
 // shelf above window 1
 color("BurlyWood") translate([W1_X0, -10, TRIM_TOP + 2]) cube([W1_X1 - W1_X0, 10, 0.75]);
 translate([(W1_X0 + W1_X1)/2, -10, TRIM_TOP + 6]) lbl("shelf over window", 1.6, -4);
-
-// ---------- hose reel on ceiling near door ----------
-color("Black") translate([150, -50, CEIL - 10]) rotate([0, 90, 0]) cylinder(h = 10, r = 9, $fn = 40);
-translate([155, -50, CEIL - 22]) lbl("hose reel (ceiling)", 1.8, -6);
 
 // ---------- dimension strip ----------
 translate([85, -32, -4]) lbl("tall 24 | gap 4 | Yukon 46 | bay 41 + drawers 18 | 0.5 | panel zone 36  = 170\" to panel wall", 2.2, 0);

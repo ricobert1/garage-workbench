@@ -20,6 +20,7 @@ RGBA = {  # CSS named colors (+ scad alpha where used)
     "Gold": (255, 215, 0, 255), "LightSkyBlue": (135, 206, 250, 180),
     "Lime": (0, 255, 0, 255),  # AR origin marker
     "SandyBrown": (244, 164, 96, 255),  # Yukon's own wood top
+    "LimeGreen": (50, 205, 50, 255),  # 40V batteries
     "Peru": (205, 133, 63, 255), "Red": (255, 0, 0, 255),
     "Sienna": (160, 82, 45, 255), "Silver": (192, 192, 192, 255),
     "SlateGray": (112, 128, 144, 255), "Tan": (210, 180, 140, 255),

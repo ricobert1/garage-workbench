@@ -80,7 +80,7 @@ color("Tan") translate([TALL_X0, -TALL_D, PLINTH]) cube([TALL_W, TALL_D, TALL_H 
 doors2(TALL_X0, PLINTH, TALL_W, 72, -TALL_D);
 doors2(TALL_X0, PLINTH + 72, TALL_W, TALL_H - PLINTH - 72, -TALL_D);
 translate([TALL_X0 + TALL_W/2, -TALL_D, 58]) lbl("TALL 24W x 94H", 2, -10);
-translate([TALL_X0 + TALL_W/2, -TALL_D, 54]) lbl("yard tools + chargers", 1.5, -10);
+translate([TALL_X0 + TALL_W/2, -TALL_D, 54]) lbl("yard tools", 1.5, -10);
 
 // ---------- Yukon chest (owned, mobile) 28..74, front flush with bench ----------
 color("Gainsboro") translate([YUK_X0, YUK_Y0, 0]) cube([YUK_W, YUK_D, YUK_H - YUK_TOP_T]);

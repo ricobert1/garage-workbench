@@ -7,6 +7,8 @@
 // DECIDED:  v8: tall cab 24W x 24D x 94H moved to left end (x 0..24). 4" handle gap. Yukon x 28..74, keeps own top,
 //           front flush with bench, parks 11.75 off wall. L top = back strip behind Yukon + main top x 74.125..133.5.
 //           Top = doubled 23/32 ply + 1/4 hardboard = 1 11/16, surface 37 1/8. 18W drawer bank at right end of bay.
+//           v8.7: 40" TV on a long full-motion arm (30.2" reach) on the back wall between shelf end and panel wall,
+//           bottom edge >= 78" (above the panel clear zone); drawn flush. Recessed power/network box behind it.
 //           v8.6: front rail/leg set back 1.5" (clamping overhang); vac + air hose grommets through the main top;
 //           anti-fatigue mat; folding stool hung on tall cab's left side. No compressor tray.
 //           v8.5: LED bar under the shelf full length; outlet strip along the whole backsplash (under window sill) on
@@ -182,3 +184,9 @@ color("DarkSlateGray") translate([MAIN_X0 + 2, -(TOP_D + 26), 0]) cube([56, 24, 
 // folding stool hung on the tall cabinet's left side
 color("Black") translate([-2.5, -25, 53]) rotate([0, 90, 0]) cylinder(h = 1, r = 6, $fn = 28);
 color("Black") translate([-2, -22.5, 42]) cube([0.6, 1, 22]); color("Black") translate([-2, -16.5, 42]) cube([0.6, 1, 22]);
+// ---------- v8.7: 40" TV on long arm, drawn pushed flush ----------
+TV_W = 34.9; TV_H = 19.6; TV_X0 = MAIN_X1 + 0.8; TV_Z0 = 78.6;            // x 134.3..169.2, z 78.6..98.2 (above the 78" zone)
+color("DimGray") translate([151.75 - 4, -1, 82]) cube([8, 1, 14]);                // arm wall plate, centered 18.25" from panel wall, 89" high
+color("White") translate([160, -0.6, 85.5]) cube([4, 0.6, 5]);                     // recessed power + low-voltage box behind TV
+color("Black") translate([TV_X0, -3.6 - 2.2, TV_Z0]) cube([TV_W, 2.2, TV_H]);
+translate([151.75, -6, TV_Z0 + 10]) lbl("40\" TV, long arm (folds flush)", 1.5, -4);

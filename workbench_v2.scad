@@ -7,6 +7,7 @@
 // DECIDED:  v8: tall cab 24W x 24D x 94H moved to left end (x 0..24). 4" handle gap. Yukon x 28..74, keeps own top,
 //           front flush with bench, parks 11.75 off wall. L top = back strip behind Yukon + main top x 74.125..133.5.
 //           Top = doubled 23/32 ply + 1/4 hardboard = 1 11/16, surface 37 1/8. 18W drawer bank at right end of bay.
+//           v8.3: one continuous 10"-deep shelf at 88.5 from x 24 to 133.5 (over cleat wall, window 1, chargers).
 //           v8.2: no uppers; full cleat wall left of window 1 (37 1/8..94). Chemicals go in the tall cabinet's upper doors.
 //           Right of window 1: open charging station, 3 Greenworks 40V chargers side by side.
 //           No ceiling hose reel (deferred until a bigger compressor).
@@ -119,16 +120,14 @@ color("Peru") translate([TALL_W, -1.5, UNDER - 3.5]) cube([MAIN_X0 - TALL_W, 1.5
 for (x = [TALL_W, YUK_X0 + 21, MAIN_X0 - 1.5]) color("Peru") translate([x, YUK_Y1 + SEAM, UNDER - 3.5]) cube([1.5, -(YUK_Y1 + SEAM) - 1.5, 3.5]); // arms
 translate([104, -TOP_D, TOP_Z + 2]) lbl("top 37 1/8\" flush w/ Yukon top, 30D", 1.6, -6);
 
-// ---------- cleat wall left of window 1 (no uppers): ply backer 37 1/8..94, 45-deg cleats every 7", bin shelf at 86 ----------
-CL_TOP = 94;                                         // lines up with the tall cabinet top
+// ---------- cleat wall left of window 1 (no uppers): ply backer 37 1/8..88.5 (up to the shelf), 45-deg cleats every 7" ----------
+CL_TOP = 88.5;                                       // meets the continuous shelf
 color("Wheat") translate([CL_X0, -0.75, TOP_Z]) cube([CL_X1 - CL_X0, 0.75, CL_TOP - TOP_Z]);
 for (z = [TOP_Z + 4 : 7 : 82]) color("Peru") translate([CL_X0, -1.5, z]) cube([CL_X1 - CL_X0, 0.75, 2.5]);
 color("WhiteSmoke") translate([CL_X0 + 2.5, -2.25, 39]) cube([CL_X1 - CL_X0 - 5, 1.5, 1.6]);          // 20A strip
-color("BurlyWood") translate([CL_X0, -7.75, 86]) cube([CL_X1 - CL_X0, 7, 0.75]);                       // bin shelf
-for (x = [CL_X0 + 0.5 : 8.5 : CL_X1 - 8]) color("DarkSlateGray") translate([x, -7.2, 86.75]) cube([7.5, 6, 5]);
 translate([(CL_X0 + CL_X1)/2, -2.5, 65]) lbl("cleat wall 53W x 37\"-94\": heavy tools 45-70\"", 1.6, -6);
 // charging station right of window 1: ply backer, strip, 3 chargers + batteries, shelf for the spare battery
-color("Wheat") translate([W1_X1, -0.75, TOP_Z]) cube([CS_X1 - W1_X1, 0.75, 85 - TOP_Z]);
+color("Wheat") translate([W1_X1, -0.75, TOP_Z]) cube([CS_X1 - W1_X1, 0.75, 88.5 - TOP_Z]);
 color("WhiteSmoke") translate([CS_X0 + 1, -2.25, 48]) cube([CS_X1 - CS_X0 - 2, 1.5, 2]);
 ch_gap = (CS_X1 - CS_X0 - 3 * CH_W) / 4;
 for (i = [0:2]) {
@@ -139,9 +138,12 @@ for (i = [0:2]) {
 color("BurlyWood") translate([CS_X0, -6, 74]) cube([CS_X1 - CS_X0, 5.25, 0.75]);
 color("LimeGreen") translate([CS_X0 + 2, -4.5, 74.75]) cube([BAT_W, BAT_T, BAT_L]);
 translate([(CS_X0 + CS_X1)/2, -6, 80]) lbl("40V chargers x3", 1.6, -4);
-// shelf above window 1
-color("BurlyWood") translate([W1_X0, -10, TRIM_TOP + 2]) cube([W1_X1 - W1_X0, 10, 0.75]);
-translate([(W1_X0 + W1_X1)/2, -10, TRIM_TOP + 6]) lbl("shelf over window", 1.6, -4);
+// ---------- one continuous shelf at 88.5 (clears window trim top 86.5), 10" deep, tall cab to just short of panel zone ----------
+SH_Z = 88.5; SH_D = 10; SH_X0 = TALL_W; SH_X1 = MAIN_X1;
+color("BurlyWood") translate([SH_X0, -SH_D, SH_Z]) cube([SH_X1 - SH_X0, SH_D, 0.75]);
+for (x = [SH_X0 + 4 : 16 : SH_X1 - 2]) color("DimGray") translate([x, -8, SH_Z - 6]) cube([1, 7.25, 6]);   // brackets ~16" o.c.
+for (x = [SH_X0 + 0.5 : 8.5 : CL_X1 - 8]) color("DarkSlateGray") translate([x, -8.5, SH_Z + 0.75]) cube([7.5, 8, 5]);
+translate([(SH_X0 + SH_X1)/2, -SH_D, SH_Z + 6]) lbl("continuous shelf 88.5\", 10D", 1.6, -4);
 
 // ---------- dimension strip ----------
 translate([85, -32, -4]) lbl("tall 24 | gap 4 | Yukon 46 | bay 41 + drawers 18 | 0.5 | panel zone 36  = 170\" to panel wall", 2.2, 0);

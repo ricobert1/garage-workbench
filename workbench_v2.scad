@@ -7,6 +7,8 @@
 // DECIDED:  v8: tall cab 24W x 24D x 94H moved to left end (x 0..24). 4" handle gap. Yukon x 28..74, keeps own top,
 //           front flush with bench, parks 11.75 off wall. L top = back strip behind Yukon + main top x 74.125..133.5.
 //           Top = doubled 23/32 ply + 1/4 hardboard = 1 11/16, surface 37 1/8. 18W drawer bank at right end of bay.
+//           v8.6: front rail/leg set back 1.5" (clamping overhang); vac + air hose grommets through the main top;
+//           anti-fatigue mat; folding stool hung on tall cab's left side. No compressor tray.
 //           v8.5: LED bar under the shelf full length; outlet strip along the whole backsplash (under window sill) on
 //           2 new 20A GFCI circuits from the panel; ABC extinguisher on tall cab's left side; 13-gal trash under window 2.
 //           v8.4: one continuous 10"-deep cleat-hung shelf (no brackets), underside at window trim top 86.5, x 24..133.5.
@@ -116,8 +118,9 @@ color("BurlyWood") {
   translate([TALL_W, YUK_Y1 + SEAM, UNDER]) cube([MAIN_X0 - TALL_W, -(YUK_Y1 + SEAM), TOP_T]);   // back strip x 24..74.125
   translate([MAIN_X0, -TOP_D, UNDER]) cube([MAIN_X1 - MAIN_X0, TOP_D, TOP_T]);                     // main top x 74.125..133.5
 }
-color("Peru") translate([MAIN_X0, -TOP_D, UNDER - 3.5]) cube([DB_X0 - MAIN_X0, 1.5, 3.5]);         // front apron
-color("Peru") translate([MAIN_X0, -TOP_D + 0.25, 0]) cube([3.5, 3.5, UNDER - 3.5]);                // front leg by Yukon
+RAIL_SET = 1.5;                                    // front rail + leg set back so clamps grab the front edge anywhere
+color("Peru") translate([MAIN_X0, -TOP_D + RAIL_SET, UNDER - 3.5]) cube([DB_X0 - MAIN_X0, 1.5, 3.5]);         // front apron
+color("Peru") translate([MAIN_X0, -TOP_D + 0.25 + RAIL_SET, 0]) cube([3.5, 3.5, UNDER - 3.5]);     // front leg by Yukon
 color("Peru") translate([TALL_W, -1.5, UNDER - 3.5]) cube([MAIN_X0 - TALL_W, 1.5, 3.5]);           // wall ledger
 for (x = [TALL_W, YUK_X0 + 21, MAIN_X0 - 1.5]) color("Peru") translate([x, YUK_Y1 + SEAM, UNDER - 3.5]) cube([1.5, -(YUK_Y1 + SEAM) - 1.5, 3.5]); // arms
 translate([104, -TOP_D, TOP_Z + 2]) lbl("top 37 1/8\" flush w/ Yukon top, 30D", 1.6, -6);
@@ -168,3 +171,14 @@ translate([-3.5, -14, 44]) lbl("ABC extinguisher", 1.4, -6);
 // 13-gal trash can on the floor under window 2, left of the tall cabinet
 color("DimGray") translate([-16.5, -12, 0]) cube([14, 11, 25]);
 translate([-9.5, -12, 28]) lbl("13-gal trash", 1.4, -4);
+// ---------- v8.6 ----------
+// through-top grommets: vac hose (2.75" hole) and compressor air line (1.5" hole), near the back of the main top
+VAC_PORT = [97, -4.5]; AIR_PORT = [106, -4];
+color("Black") translate([VAC_PORT[0], VAC_PORT[1], TOP_Z]) cylinder(h = 0.2, r = 1.375, $fn = 32);
+color("Black") translate([AIR_PORT[0], AIR_PORT[1], TOP_Z]) cylinder(h = 0.2, r = 0.75, $fn = 24);
+translate([101, -4, TOP_Z + 3]) lbl("vac + air ports", 1.4, -3);
+// anti-fatigue mat in front of the main top
+color("DarkSlateGray") translate([MAIN_X0 + 2, -(TOP_D + 26), 0]) cube([56, 24, 0.6]);
+// folding stool hung on the tall cabinet's left side
+color("Black") translate([-2.5, -25, 53]) rotate([0, 90, 0]) cylinder(h = 1, r = 6, $fn = 28);
+color("Black") translate([-2, -22.5, 42]) cube([0.6, 1, 22]); color("Black") translate([-2, -16.5, 42]) cube([0.6, 1, 22]);

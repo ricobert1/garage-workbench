@@ -7,6 +7,8 @@
 // DECIDED:  v8: tall cab 24W x 24D x 94H moved to left end (x 0..24). 4" handle gap. Yukon x 28..74, keeps own top,
 //           front flush with bench, parks 11.75 off wall. L top = back strip behind Yukon + main top x 74.125..133.5.
 //           Top = doubled 23/32 ply + 1/4 hardboard = 1 11/16, surface 37 1/8. 18W drawer bank at right end of bay.
+//           v8.5: LED bar under the shelf full length; outlet strip along the whole backsplash (under window sill) on
+//           2 new 20A GFCI circuits from the panel; ABC extinguisher on tall cab's left side; 13-gal trash under window 2.
 //           v8.4: one continuous 10"-deep cleat-hung shelf (no brackets), underside at window trim top 86.5, x 24..133.5.
 //           v8.2: no uppers; full cleat wall left of window 1 (37 1/8..94). Chemicals go in the tall cabinet's upper doors.
 //           Right of window 1: open charging station, 3 Greenworks 40V chargers side by side.
@@ -124,7 +126,6 @@ translate([104, -TOP_D, TOP_Z + 2]) lbl("top 37 1/8\" flush w/ Yukon top, 30D", 
 CL_TOP = TRIM_TOP;                                   // meets the shelf / window trim top
 color("Wheat") translate([CL_X0, -0.75, TOP_Z]) cube([CL_X1 - CL_X0, 0.75, CL_TOP - TOP_Z]);
 for (z = [TOP_Z + 4 : 7 : 82]) color("Peru") translate([CL_X0, -1.5, z]) cube([CL_X1 - CL_X0, 0.75, 2.5]);
-color("WhiteSmoke") translate([CL_X0 + 2.5, -2.25, 39]) cube([CL_X1 - CL_X0 - 5, 1.5, 1.6]);          // 20A strip
 translate([(CL_X0 + CL_X1)/2, -2.5, 65]) lbl("cleat wall 53W x 37\"-94\": heavy tools 45-70\"", 1.6, -6);
 // charging station right of window 1: ply backer, strip, 3 chargers + batteries, shelf for the spare battery
 color("Wheat") translate([W1_X1, -0.75, TOP_Z]) cube([CS_X1 - W1_X1, 0.75, TRIM_TOP - TOP_Z]);
@@ -151,3 +152,19 @@ translate([(SH_X0 + SH_X1)/2, -SH_D, SH_Z + 9]) lbl("cleat-hung shelf at 86.5\" 
 
 // ---------- dimension strip ----------
 translate([85, -32, -4]) lbl("tall 24 | gap 4 | Yukon 46 | bay 41 + drawers 18 | 0.5 | panel zone 36  = 170\" to panel wall", 2.2, 0);
+
+// ---------- v8.5 essentials ----------
+// LED bar under the shelf, full length, near the front edge
+color("WhiteSmoke") translate([SH_X0 + 1, -8.5, SH_Z - 0.6]) cube([SH_X1 - SH_X0 - 2, 1.2, 0.6]);
+// outlet strip (plug-mold) along the whole backsplash, 37.75..39 so it clears the window sill (39.5); 2 x 20A GFCI circuits
+PM_Z = 37.75;
+color("WhiteSmoke") translate([TALL_W + 1, -2.0, PM_Z]) cube([MAIN_X1 - TALL_W - 2, 1.25, 1.25]);
+for (x = [TALL_W + 6 : 12 : MAIN_X1 - 4]) color("DimGray") translate([x, -2.1, PM_Z + 0.3]) cube([1.6, 0.2, 0.65]);
+translate([104, -2, PM_Z + 3]) lbl("outlet strip full length: 2 x 20A GFCI from panel", 1.4, -3);
+// ABC fire extinguisher on the tall cabinet's left side (below window 2 sill), handle at ~40"
+color("Red") translate([-3.5, -14, 24]) cylinder(h = 14, r = 2.5, $fn = 24);
+color("Black") translate([-3.5, -14, 38]) cylinder(h = 2.5, r = 1.2, $fn = 16);
+translate([-3.5, -14, 44]) lbl("ABC extinguisher", 1.4, -6);
+// 13-gal trash can on the floor under window 2, left of the tall cabinet
+color("DimGray") translate([-16.5, -12, 0]) cube([14, 11, 25]);
+translate([-9.5, -12, 28]) lbl("13-gal trash", 1.4, -4);

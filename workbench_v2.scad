@@ -141,7 +141,8 @@ translate([(CS_X0 + CS_X1)/2, -6, 80]) lbl("40V chargers x3", 1.6, -4);
 // ---------- one continuous shelf at 88.5 (clears window trim top 86.5), 10" deep, tall cab to just short of panel zone ----------
 SH_Z = 88.5; SH_D = 10; SH_X0 = TALL_W; SH_X1 = MAIN_X1;
 color("BurlyWood") translate([SH_X0, -SH_D, SH_Z]) cube([SH_X1 - SH_X0, SH_D, 0.75]);
-for (x = [SH_X0 + 4 : 16 : SH_X1 - 2]) color("DimGray") translate([x, -8, SH_Z - 6]) cube([1, 7.25, 6]);   // brackets ~16" o.c.
+for (x = [SH_X0 + 4, SH_X0 + 20, SH_X0 + 36, W1_X0 - 3, W1_X1 + 1.5, SH_X1 - 3]) color("DimGray") translate([x, -8, SH_Z - 6]) cube([1, 7.25, 6]);   // brackets on studs; none over window 1 trim
+color("BurlyWood") translate([SH_X0, -SH_D, SH_Z - 1.5]) cube([SH_X1 - SH_X0, 0.75, 1.5]);                 // 1x2 front stiffener (spans the 41" over the window)
 for (x = [SH_X0 + 0.5 : 8.5 : CL_X1 - 8]) color("DarkSlateGray") translate([x, -8.5, SH_Z + 0.75]) cube([7.5, 8, 5]);
 translate([(SH_X0 + SH_X1)/2, -SH_D, SH_Z + 6]) lbl("continuous shelf 88.5\", 10D", 1.6, -4);
 

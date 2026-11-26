@@ -7,7 +7,8 @@
 // DECIDED:  v8: tall cab 24W x 24D x 94H moved to left end (x 0..24). 4" handle gap. Yukon x 28..74, keeps own top,
 //           front flush with bench, parks 11.75 off wall. L top = back strip behind Yukon + main top x 74.125..133.5.
 //           Top = doubled 23/32 ply + 1/4 hardboard = 1 11/16, surface 37 1/8. 18W drawer bank at right end of bay.
-//           Uppers 53W left of window 1. Right of window 1: open charging station, 3 Greenworks 40V chargers side by side.
+//           v8.2: no uppers; full cleat wall left of window 1 (37 1/8..94). Chemicals go in the tall cabinet's upper doors.
+//           Right of window 1: open charging station, 3 Greenworks 40V chargers side by side.
 //           No ceiling hose reel (deferred until a bigger compressor).
 // ASSUMED:  Yukon look/handle position, Yukon wood top 1.75, 12" upper depth, cleat spacing, drawer bank 18W x 24D.
 
@@ -25,7 +26,7 @@ DB_W = 18; DB_D = 24; DB_X0 = MAIN_X1 - DB_W;      // drawer bank
 // windows
 W1_X0 = 78; W1_X1 = 116; W2_X0 = -38; W2_X1 = 0; SILL = 40.5; TRIM_TOP = 86.5;
 // uppers
-UP_X0 = TALL_W; UP_X1 = W1_X0 - 1; UP_Z0 = 55; UP_H = 30; UP_D = 12;
+CL_X0 = TALL_W; CL_X1 = W1_X0 - 1;                 // cleat wall left of window 1
 CS_X0 = W1_X1 + 0.5; CS_X1 = MAIN_X1;                // charging station right of window 1
 CH_W = 4.56; CH_H = 6.63; CH_D = 2.83;              // charger (measured), battery 3.2W x 6.38L x 2.06 on its face
 BAT_W = 3.2; BAT_L = 6.38; BAT_T = 2.06; CH_Z = 58;
@@ -80,7 +81,7 @@ color("Tan") translate([TALL_X0, -TALL_D, PLINTH]) cube([TALL_W, TALL_D, TALL_H 
 doors2(TALL_X0, PLINTH, TALL_W, 72, -TALL_D);
 doors2(TALL_X0, PLINTH + 72, TALL_W, TALL_H - PLINTH - 72, -TALL_D);
 translate([TALL_X0 + TALL_W/2, -TALL_D, 58]) lbl("TALL 24W x 94H", 2, -10);
-translate([TALL_X0 + TALL_W/2, -TALL_D, 54]) lbl("yard tools", 1.5, -10);
+translate([TALL_X0 + TALL_W/2, -TALL_D, 54]) lbl("yard tools; chemicals up top", 1.5, -10);
 
 // ---------- Yukon chest (owned, mobile) 28..74, front flush with bench ----------
 color("Gainsboro") translate([YUK_X0, YUK_Y0, 0]) cube([YUK_W, YUK_D, YUK_H - YUK_TOP_T]);
@@ -118,19 +119,14 @@ color("Peru") translate([TALL_W, -1.5, UNDER - 3.5]) cube([MAIN_X0 - TALL_W, 1.5
 for (x = [TALL_W, YUK_X0 + 21, MAIN_X0 - 1.5]) color("Peru") translate([x, YUK_Y1 + SEAM, UNDER - 3.5]) cube([1.5, -(YUK_Y1 + SEAM) - 1.5, 3.5]); // arms
 translate([104, -TOP_D, TOP_Z + 2]) lbl("top 37 1/8\" flush w/ Yukon top, 30D", 1.6, -6);
 
-// ---------- work wall + uppers left of window 1 ----------
-color("Wheat") translate([UP_X0, -0.75, TOP_Z]) cube([UP_X1 - UP_X0, 0.75, UP_Z0 - TOP_Z]);
-for (z = [41 : 5 : 52]) color("Peru") translate([UP_X0, -1.5, z]) cube([UP_X1 - UP_X0, 0.75, 2.5]);
-color("WhiteSmoke") translate([UP_X0, -2.5, 45.5]) cube([UP_X1 - UP_X0, 1.5, 2]);
-translate([(UP_X0 + UP_X1)/2, -2.5, 50]) lbl("cleats + new 20A strip", 1.6, -4);
-up_w = (UP_X1 - UP_X0) / 2;
-for (i = [0:1]) {
-  x = UP_X0 + i * up_w;
-  color("Tan") translate([x, -UP_D, UP_Z0]) cube([up_w, UP_D, UP_H]);
-  doors2(x, UP_Z0, up_w, UP_H, -UP_D);
-}
-translate([(UP_X0 + UP_X1)/2, -UP_D, UP_Z0 + UP_H/2]) lbl("uppers 53W x 12D x 30H", 1.8, -10);
-for (x = [UP_X0 + 1 : 12.5 : UP_X1 - 12]) color("DarkSlateGray") translate([x, -11, UP_Z0 + UP_H]) cube([12, 10, 10]);
+// ---------- cleat wall left of window 1 (no uppers): ply backer 37 1/8..94, 45-deg cleats every 7", bin shelf at 86 ----------
+CL_TOP = 94;                                         // lines up with the tall cabinet top
+color("Wheat") translate([CL_X0, -0.75, TOP_Z]) cube([CL_X1 - CL_X0, 0.75, CL_TOP - TOP_Z]);
+for (z = [TOP_Z + 4 : 7 : 82]) color("Peru") translate([CL_X0, -1.5, z]) cube([CL_X1 - CL_X0, 0.75, 2.5]);
+color("WhiteSmoke") translate([CL_X0 + 2.5, -2.25, 39]) cube([CL_X1 - CL_X0 - 5, 1.5, 1.6]);          // 20A strip
+color("BurlyWood") translate([CL_X0, -7.75, 86]) cube([CL_X1 - CL_X0, 7, 0.75]);                       // bin shelf
+for (x = [CL_X0 + 0.5 : 8.5 : CL_X1 - 8]) color("DarkSlateGray") translate([x, -7.2, 86.75]) cube([7.5, 6, 5]);
+translate([(CL_X0 + CL_X1)/2, -2.5, 65]) lbl("cleat wall 53W x 37\"-94\": heavy tools 45-70\"", 1.6, -6);
 // charging station right of window 1: ply backer, strip, 3 chargers + batteries, shelf for the spare battery
 color("Wheat") translate([W1_X1, -0.75, TOP_Z]) cube([CS_X1 - W1_X1, 0.75, 85 - TOP_Z]);
 color("WhiteSmoke") translate([CS_X0 + 1, -2.25, 48]) cube([CS_X1 - CS_X0 - 2, 1.5, 2]);

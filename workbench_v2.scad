@@ -7,6 +7,8 @@
 // DECIDED:  v8: tall cab 24W x 24D x 94H moved to left end (x 0..24). 4" handle gap. Yukon x 28..74, keeps own top,
 //           front flush with bench, parks 11.75 off wall. L top = back strip behind Yukon + main top x 74.125..133.5.
 //           Top = doubled 23/32 ply + 1/4 hardboard = 1 11/16, surface 37 1/8. 18W drawer bank at right end of bay.
+//           v8.8: sound - 2 all-weather passive speakers on the shelf ends, streaming amp on the shelf (HDMI ARC from TV),
+//           8" sealed sub on isolation straps above the compressor; air port moved to x 112. Component sizes TBD.
 //           v8.7: 40" TV on a long full-motion arm (30.2" reach) on the back wall between shelf end and panel wall,
 //           bottom edge >= 78" (above the panel clear zone); drawn flush. Recessed power/network box behind it.
 //           v8.6: front rail/leg set back 1.5" (clamping overhang); vac + air hose grommets through the main top;
@@ -152,7 +154,7 @@ color("BurlyWood") translate([SH_X0, -SH_D, SH_Z]) cube([SH_X1 - SH_X0, SH_D, 0.
 color("BurlyWood") translate([SH_X0, -1.5 - 0.75, SH_Z]) cube([SH_X1 - SH_X0, 0.75, SH_BACK]);                     // back board
 color("Peru") translate([SH_X0, -0.75, SH_Z + SH_BACK - 3]) cube([SH_X1 - SH_X0, 0.75, 3]);                        // wall cleat (45 deg)
 color("Peru") translate([SH_X0, -1.5, SH_Z + SH_BACK - 3.5]) cube([SH_X1 - SH_X0, 0.75, 3]);                        // mating cleat on back board
-for (x = [SH_X0 + 0.5 : 8.5 : CL_X1 - 8]) color("DarkSlateGray") translate([x, -8.5, SH_Z + 0.75]) cube([7.5, 6, 5]);
+for (x = [SH_X0 + 9 : 8.5 : CL_X1 - 8]) color("DarkSlateGray") translate([x, -8.5, SH_Z + 0.75]) cube([7.5, 6, 5]);
 translate([(SH_X0 + SH_X1)/2, -SH_D, SH_Z + 9]) lbl("cleat-hung shelf at 86.5\" (window trim top), 10D", 1.6, -4);
 
 // ---------- dimension strip ----------
@@ -175,7 +177,7 @@ color("DimGray") translate([-16.5, -12, 0]) cube([14, 11, 25]);
 translate([-9.5, -12, 28]) lbl("13-gal trash", 1.4, -4);
 // ---------- v8.6 ----------
 // through-top grommets: vac hose (2.75" hole) and compressor air line (1.5" hole), near the back of the main top
-VAC_PORT = [97, -4.5]; AIR_PORT = [106, -4];
+VAC_PORT = [97, -4.5]; AIR_PORT = [112, -4];                 // v8.8: air port moved right to clear the sub
 color("Black") translate([VAC_PORT[0], VAC_PORT[1], TOP_Z]) cylinder(h = 0.2, r = 1.375, $fn = 32);
 color("Black") translate([AIR_PORT[0], AIR_PORT[1], TOP_Z]) cylinder(h = 0.2, r = 0.75, $fn = 24);
 translate([101, -4, TOP_Z + 3]) lbl("vac + air ports", 1.4, -3);
@@ -190,3 +192,10 @@ color("DimGray") translate([151.75 - 4, -1, 82]) cube([8, 1, 14]);              
 color("White") translate([160, -0.6, 85.5]) cube([4, 0.6, 5]);                     // recessed power + low-voltage box behind TV
 color("Black") translate([TV_X0, -3.6 - 2.2, TV_Z0]) cube([TV_W, 2.2, TV_H]);
 translate([151.75, -6, TV_Z0 + 10]) lbl("40\" TV, long arm (folds flush)", 1.5, -4);
+// ---------- v8.8: sound (placeholder sizes until components are chosen) ----------
+SPK = [6.5, 6.5, 10];                                                              // W x D x H, each
+color("DimGray") translate([SH_X0 + 1, -8, SH_Z + 0.75]) cube(SPK);                // L speaker, shelf left end
+color("DimGray") translate([SH_X1 - 7.5, -8, SH_Z + 0.75]) cube(SPK);             // R speaker, shelf right end
+color("Black") translate([CS_X0 + 0.5, -9.2, SH_Z + 0.75]) cube([8.5, 8, 2.5]);    // streaming amp
+color("Black") translate([98.6, -12.8, 21]) cube([11, 11, 11]);                    // 8" sealed sub above compressor (isolation straps)
+translate([104, -13, 34]) lbl("8in sub (isolated)", 1.3, -4);
